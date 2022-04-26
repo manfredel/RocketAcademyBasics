@@ -60,25 +60,41 @@ The <html> element is known as the root element of a HTML page. All other elemen
       </ul>
     </nav>
     <!-- The <h1> element defines a large heading. There are 6 pre-set header elements, <h1> to <h6> -->
-    <h1 id="header">🚀 Basics Project 3: Blackjack 🚀</h1>
+    <h1 id="header">♠️ Casino Rumble: Blackjack ♣️</h1>
     <!-- The <div> tag defines a division or a section in an HTML document, and is commonly use as a "container" for nested HTML elements. -->
     <div class="container">
       <!-- The <p> tag defines a paragraph element. -->
-      <p>Input:</p>
+      <h2 style="color: white; font-family: cursive;">Welcome!</h2>
+      <p style="color: white; font-family: cursive;">
+        Ready for a game blackjack? <br />
+        Let's see how much you can win!
+      </p>
       <!-- The self-closing <input /> tag represents a field for a user to enter input. -->
-      <input id="input-field" />
+      <input id="input-field" placeholder='Place a bet and start the game!''
+      style="width: 355px; font-size:17px;" />
+
       <!-- The self-closing <br /> tag represents a line break - a line's worth of spacing before dispalying the next element. -->
       <br />
       <!-- The <button> tag represents.. you guessed it! a button. -->
-      <button id="submit-button">Submit</button>
-      <p>Output:</p>
-      <div class="output-div" id="output-div"></div>
+      <button id="submit-button">Click</button>
+      <!--<button id="hitButton">Hit</button>
+      <button id="standButton">Stand</button>-->
+
+      <p style="color: white; font-family: cursive; font-size: 20px;">
+        🃏 <u>Game Information</u> 🃏
+      </p>
+      <div
+        style="color: white; font-family: cursive;"
+        class="output-div"
+        id="output-div"
+      ></div>
     </div>
     <!-- Everything below this is incorporating JavaScript programming logic into the webpage. -->
     <!-- The script tag encloses JavaScript syntax for the browser to interpret programtically -->
     <!-- The following line imports all code written in the script.js file -->
     <script src="script.js"></script>
     <!-- Define button click functionality -->
+
     <script>
       // Declare and define a variable that represents the Submit Button
       var button = document.querySelector("#submit-button");
@@ -87,6 +103,7 @@ The <html> element is known as the root element of a HTML page. All other elemen
       button.addEventListener("click", function () {
         // Set result to input value
         var input = document.querySelector("#input-field");
+
         // Store the output of main() in a new variable
         var result = main(input.value);
 
@@ -97,6 +114,18 @@ The <html> element is known as the root element of a HTML page. All other elemen
         // Reset input value
         input.value = "";
       });
+
+      /*
+      var cards = document.getElementById("hitButton");
+      cards.addEventListener("click", function () {
+        cardInHand(playerCards);
+      });
+
+      var end = document.getElementById("standButton");
+      end.addEventListener("click", function () {
+      cardInHand(playerCards);
+       });
+      */
     </script>
   </body>
 </html>

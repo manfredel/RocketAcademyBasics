@@ -57,20 +57,20 @@ nav ul li a {
 }
 
 .container {
-  background-color: #ffffff;
+  background-color: #004e00;
   margin: 40px auto;
   max-width: 800px;
   padding: 38px 31px;
-  border-radius: 8px;
+  border-radius: 70px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 input {
   font-size: 21px;
   line-height: 33px;
-  margin: 0 0 23px 0;
+  margin: 0 0 2px 0;
   padding: 0 9px;
-  width: 100%;
+  width: 30%;
 }
 
 button {
@@ -81,10 +81,10 @@ button {
 }
 
 .output-div {
-  background-color: lightgrey;
-  margin: 20px auto;
+  background-color: #004e00;
+  margin: -10px 0 40px -15px;
   padding: 20px;
-  width: 100%;
+  width: 50%;
 }
 
 hr {

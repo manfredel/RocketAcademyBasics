@@ -57,12 +57,16 @@ nav ul li a {
 }
 
 .container {
-  background-color: #ffffff;
+  background-color: SlateGray;
   margin: 40px auto;
   max-width: 800px;
   padding: 38px 31px;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.diceImage {
+  width: 300px;
 }
 
 input {
@@ -74,10 +78,13 @@ input {
 }
 
 button {
+  background-color: green;
+  color: white;
+  font-family: Courier New;
   font-size: 21px;
   line-height: 33px;
   margin: 0 0 23px 0;
-  padding: 0 6px;
+  padding: 0 15px;
 }
 
 .output-div {
