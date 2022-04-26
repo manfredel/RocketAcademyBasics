@@ -11,6 +11,9 @@ var compHand = [];
 var playerCash = 100;
 var bets = 0;
 var tempBets = 0;
+var compSum = 0;
+
+var OutputValue = "";
 
 var makeDeck = function () {
   // create the empty deck at the beginning
@@ -156,6 +159,74 @@ var displayValues = function (playerHandValue, dealerHandValue) {
   return totalHandValueMessage;
 };
 
+var gameLogic = function () {
+  var playerSum = sumHand(playerHand);
+  var compSum = sumHand(compHand);
+
+  if (compSum <= dealerHitThreshold) {
+    cardToHand(compHand);
+    compSum = sumHand(compHand);
+
+    if (compSum > 21) {
+      bets = tempBets;
+      playerCash += +bets;
+      OutputValue = `Computer has busted and loses 😍 <br><br>${displayHands(
+        playerHand,
+        compHand
+      )} <br> ${displayValues(playerSum, compSum)}`;
+      playerHand = [];
+      compHand = [];
+      gameMode = betRound;
+      return `${OutputValue}. <br><br>
+      Your bet is $${tempBets} and you now have 💵 $${playerCash} 💵. <br>Place a bet to play again.`;
+    }
+    return `${displayHands(playerHand, compHand)}<br><br>
+      Please enter "stand" to continue`;
+  }
+  if (compSum > dealerHitThreshold) {
+    // If player hand sum is greater than computer hand sum, player wins!
+    if (playerSum > compSum && playerSum <= 21) {
+      bets = tempBets;
+      playerCash += +bets;
+      OutputValue = `Player wins! <br><br> ${displayHands(
+        playerHand,
+        compHand
+      )} <br> ${displayValues(playerSum, compSum)}`;
+      playerHand = [];
+      compHand = [];
+      gameMode = betRound;
+      return `${OutputValue}. <br><br>
+        Your bet is $${tempBets} and you now have 💵 $${playerCash} 💵. <br>Place a bet to play again.`;
+    }
+    if (playerSum == compSum && playerSum <= 21) {
+      bets = 0;
+      playerCash += +bets;
+      OutputValue = `Its a tie! <br><br> ${displayHands(
+        playerHand,
+        compHand
+      )} <br> ${displayValues(playerSum, compSum)}`;
+      playerHand = [];
+      compHand = [];
+      gameMode = betRound;
+      return `${OutputValue}.  <br><br>
+        Your bet is $${tempBets} and you now have 💵 $${playerCash} 💵. <br>Place a bet to play again.`;
+    }
+
+    if (playerSum < compSum && compSum <= 21) {
+      bets = tempBets;
+      playerCash -= +bets;
+      OutputValue = `Computer wins! <br><br> ${displayHands(
+        playerHand,
+        compHand
+      )} <br> ${displayValues(playerSum, compSum)}`;
+      playerHand = [];
+      compHand = [];
+      gameMode = betRound;
+      return `${OutputValue}. <br><br> Your bet is $${tempBets} and you now have 💵 $${playerCash} 💵. <br>Place a bet to play again.`;
+    }
+  }
+};
+
 //Main game output
 var main = function (input) {
   var OutputValue = "";
@@ -218,7 +289,7 @@ var main = function (input) {
         Your bet is $${tempBets} and you now have 💵 $${playerCash} 💵. <br>Place a bet to play again.`;
     }
     // The cards are displayed to the user.
-    gameMode = endRound;
+    gameMode = choice;
     return `${displayHands(playerHand, compHand)} <br><br>
       Please enter "hit" or "stand"`;
   }
@@ -226,17 +297,21 @@ var main = function (input) {
   // Then begins a new action, where the user has to decide something: do they hit or stand.
   var compSum = sumHand(compHand);
 
-  if (gameMode == endRound) {
+  if (gameMode == choice) {
+    if (input !== "hit" && input !== "stand") {
+      return `Error input 🤷 <br><br> ${displayHands(
+        playerHand,
+        compHand
+      )} <br><br>
+      Please enter "hit" or "stand"`;
+    }
     //If user input is neither "hit" nor "stand" prompt user
-    if (input == "hit") {
+    else if (input === "hit") {
       cardToHand(playerHand);
-
-      //if (input === "stand") {
-      //playerHasChosenToStand = true;
 
       // If bust, show player that she busts
       var playerSum = sumHand(playerHand);
-      if (sumHand(playerHand) > 21) {
+      if (playerSum > 21) {
         bets = tempBets;
         playerCash -= +bets;
         OutputValue = `Player has busted and loses 💔 <br><br> ${displayHands(
@@ -252,7 +327,6 @@ var main = function (input) {
       // The computer also decides to hit or stand.
       // Computer hits if sum less than or equal to dealer hit threshold
       // Otherwise, computer stays
-
       if (compSum <= dealerHitThreshold) {
         cardToHand(compHand);
       }
@@ -276,58 +350,10 @@ var main = function (input) {
       Please enter "hit" or "stand"`;
     }
 
-    // If player and computer have both not busted and chosen to stand, decide who wins
-    if (input == "stand") {
-      if (compSum > dealerHitThreshold) {
-        // If player hand sum is greater than computer hand sum, player wins!
-        if (playerSum > compSum && playerSum <= 21) {
-          bets = tempBets;
-          playerCash += +bets;
-          OutputValue = `Player wins! 😍 <br><br> ${displayHands(
-            playerHand,
-            compHand
-          )} <br> ${displayValues(playerSum, compSum)}`;
-          playerHand = [];
-          compHand = [];
-          gameMode = betRound;
-          return `${OutputValue}. <br><br>
-        Your bet is $${tempBets} and you now have 💵 $${playerCash} 💵. <br>Place a bet to play again.`;
-        }
-        if (playerSum == compSum && playerSum <= 21) {
-          bets = 0;
-          playerCash += +bets;
-          OutputValue = `Its a tie! <br><br> ${displayHands(
-            playerHand,
-            compHand
-          )} <br> ${displayValues(playerSum, compSum)}`;
-          playerHand = [];
-          compHand = [];
-          gameMode = betRound;
-          return `${OutputValue}.  <br><br>
-        Your bet is $${tempBets} and you now have 💵 $${playerCash} 💵. <br>Place a bet to play again.`;
-        }
-
-        if (playerSum < compSum && compSum <= 21) {
-          bets = tempBets;
-          playerCash -= +bets;
-          OutputValue = `Computer wins! 💔 <br><br> ${displayHands(
-            playerHand,
-            compHand
-          )} <br> ${displayValues(playerSum, compSum)}`;
-          playerHand = [];
-          compHand = [];
-          gameMode = betRound;
-          return `${OutputValue}. <br><br>
-      Your bet is $${tempBets} and you now have 💵 $${playerCash} 💵. <br>Place a bet to play again.`;
-        }
-      }
-    }
-    if (input !== "hit" && input !== "stand") {
-      return `Error input 🤷 <><br> ${displayHands(
-        playerHand,
-        compHand
-      )} <br><br>
-    Please enter "hit" or "stand"`;
+    //If user inputed stand
+    else if (input == "stand") {
+      var game = gameLogic();
+      return game;
     }
   }
 };
